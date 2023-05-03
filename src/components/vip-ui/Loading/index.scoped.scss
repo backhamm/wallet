@@ -1,0 +1,22 @@
+.arc {
+    overflow: hidden;
+    animation: changDeg 1s infinite linear;
+
+    &-bg {
+        stroke: #515051;
+    }
+
+    &-line {
+        stroke: $primary-color;
+    }
+}
+
+@keyframes changDeg {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}

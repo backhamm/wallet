@@ -1,0 +1,23 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@tailwind variants;
+@tailwind screens;
+
+//windicss 通用class
+
+.image-object-fit {
+    @apply w-full h-full object-cover;
+}
+
+.text-ellipsis {
+    @apply overflow-hidden overflow-ellipsis whitespace-nowrap;
+}
+
+.flex-between-center {
+    @apply flex justify-between items-center;
+}
+
+.flex-center-center {
+    @apply flex justify-center items-center;
+}

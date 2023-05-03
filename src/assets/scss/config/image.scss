@@ -1,0 +1,73 @@
+i[class*='icon-'] {
+    display: inline-block;
+    vertical-align: top;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100% 100%;
+}
+
+$tabIcons: home0, home1, record0, record1, games, dynamic0, dynamic1, funds0,
+    funds1;
+@each $item in $tabIcons {
+    .icon-#{$item} {
+        background-image: url('../../images/icon/tab/#{$item}.png');
+    }
+}
+
+$otherIcons: news, scan, withdraw, recharge, arrow, arrow2, call;
+@each $item in $otherIcons {
+    .icon-#{$item} {
+        background-image: url('../../images/icon/other/#{$item}.png');
+    }
+}
+
+$userCenterIcons: back, copy, vip, authorizer, password, setting, notify;
+@each $item in $userCenterIcons {
+    .icon-#{$item} {
+        background-image: url('../../images/icon/userCenter/#{$item}.png');
+    }
+}
+
+/* stylelint-disable */
+$navIcons: transfer, codeOut, withdrawal, receiptCode, reserveRecord, scanCode,
+    activity, exchangeRate, serviceCenter, agentNetwork, CS, more;
+/* stylelint-enable */
+@each $item in $navIcons {
+    .icon-#{$item} {
+        background-image: url('../../images/icon/nav/#{$item}.png');
+    }
+}
+
+/* stylelint-disable */
+$navIcons: BTC, CNY, ETH, HKD, KRW, PHP, TRB;
+/* stylelint-enable */
+@each $item in $navIcons {
+    .icon-#{$item} {
+        background-image: url('../../images/icon/currency/#{$item}.png');
+    }
+}
+
+.home-top-bg {
+    background: url('../../images/home/top-bg.png') no-repeat center 127px/100%;
+}
+
+.page-bg {
+    background: url('../../images/home/page-bg.png') no-repeat center/100%;
+}
+
+.user-banner {
+    background: url('../../images/userCenter/userBanner.png') no-repeat
+        center/100%;
+}
+
+.guide-zh {
+    background: url('../../images/login/guide-zh.png') no-repeat center/100%;
+}
+
+.guide-en {
+    background: url('../../images/login/guide-en.png') no-repeat center/100%;
+}
+
+.guide-ko {
+    background: url('../../images/login/guide-ko.png') no-repeat center/100%;
+}
