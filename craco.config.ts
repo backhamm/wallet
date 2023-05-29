@@ -1,12 +1,15 @@
 const path = require('path');
 const WindiCSSWebpackPlugin = require('windicss-webpack-plugin');
 const WebpackBar = require('webpackbar');
+const webpack = require('webpack');
 const sassResourcesLoader = require('craco-sass-loader');
 const CompressionPlugin = require('compression-webpack-plugin');
 const CracoPluginScopedCss = require('craco-plugin-scoped-css');
+const getRepoInfo = require('git-repo-info');
 
 const resolve = (dir: string) => path.resolve(__dirname, dir);
 const { REACT_APP_API_URL, NODE_ENV, REACT_APP_VIEWPORTWIDTH } = process.env;
+const repoInfo = getRepoInfo();
 
 module.exports = {
     style: {
@@ -67,6 +70,16 @@ module.exports = {
                     profile: true,
                     name: 'webpack',
                     color: 'green',
+                }),
+                //获取git信息
+                new webpack.DefinePlugin({
+                    'process.env.REACT_APP_TAG': JSON.stringify(repoInfo.tag),
+                    'process.env.REACT_APP_COMMITHASH': JSON.stringify(
+                        repoInfo.sha,
+                    ),
+                    'process.env.REACT_APP_BRANCH': JSON.stringify(
+                        repoInfo.branch,
+                    ),
                 }),
             ],
         },

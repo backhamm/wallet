@@ -108,16 +108,12 @@ const TestPage: FC<TestPageProps> = (props) => {
                 <Empty description="暂无数据"></Empty>
                 <Image
                     src="https://cdn.pixabay.com/photo/2023/02/28/03/42/ibex-7819817_640.jpg"
-                    className="w-[100px] h-[100px]"
-                    width={100}
-                    height={100}
+                    className="w-100px h-100px"
                 ></Image>
 
                 <Image
                     src="https://cdn.pixabay.com/photo/2023/03/03/08/22/skulls-7827155_6401.jpg"
-                    className="w-[100px] h-[100px]"
-                    width={100}
-                    height={100}
+                    className="w-100px h-100px"
                 ></Image>
 
                 {[...Array(10)].map((item, index) => {
@@ -125,9 +121,7 @@ const TestPage: FC<TestPageProps> = (props) => {
                         <Image
                             key={index}
                             src="https://cdn.pixabay.com/photo/2023/03/03/08/22/skulls-7827155_640.jpg"
-                            className="w-[100px] h-[100px]"
-                            width={100}
-                            height={100}
+                            className="w-100px h-100px"
                         ></Image>
                     );
                 })}

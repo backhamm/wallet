@@ -6,6 +6,11 @@ export interface ButtonProps {
     loading?: boolean;
 
     /**
+     * 按钮宽度
+     */
+    width?: string;
+
+    /**
      * 是否禁用
      * @default false
      */

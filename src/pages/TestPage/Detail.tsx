@@ -6,7 +6,7 @@ import { getHallList } from '@/api/home';
 type TestDetailProps = {};
 
 const TestDetail: FC<TestDetailProps> = (props) => {
-    const { mutate, isLoading, isError } = useMutation(getHallList, {
+    const { mutateAsync, isLoading, isError } = useMutation(getHallList, {
         onSuccess: (res) => {
             if (res?.code === 10000) {
                 setList(list.concat(res.data));
@@ -26,7 +26,7 @@ const TestDetail: FC<TestDetailProps> = (props) => {
     return (
         <div id="list">
             <List
-                getData={() => mutate({})}
+                getData={() => mutateAsync()}
                 hasMore={hasMore}
                 isLoading={isLoading}
                 isError={isError}

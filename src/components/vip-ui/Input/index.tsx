@@ -53,7 +53,7 @@ const Input = forwardRef((props: InputProps, ref: Ref<InputRef>): any => {
                 ref={inputRef}
                 className={classNames(
                     inputClass,
-                    'outline-none border-none placeholder-baseColor bg-transparent flex-1 h-full px-[14px]',
+                    'outline-none border-none placeholder-baseColor bg-transparent flex-1 h-full px-14px',
                 )}
                 style={inputStyle}
                 value={inputValue}

@@ -7,21 +7,43 @@ import React, {
 } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import ReactDOM from 'react-dom';
+import { useTranslation } from 'react-i18next';
 import { ModalProps, ModalRef } from '@/types/vip-ui/modal';
 import { useOverFlowScroll } from '@/hooks';
+import { Button } from '@/components/vip-ui';
 
 const Modal = forwardRef(
     (props: PropsWithChildren<ModalProps>, ref: Ref<ModalRef>) => {
         const domRef = useRef<HTMLDivElement | null>(null);
+        const { t } = useTranslation();
         const {
             visible,
             onCancel,
             onConfirm,
             title,
-            noFooter = false,
+            confirmBtn,
+            confirmText,
+            cancelBtn,
+            cancelText,
             className,
             children,
+            motionType = 'scale',
+            width = 'w-267px',
+            clickExternal = true,
         } = props;
+
+        const motionObj = {
+            scale: {
+                initial: { opacity: 0, scale: 0.8 },
+                animate: { opacity: 1, scale: 1 },
+                exit: { opacity: 0, scale: 0.8 },
+            },
+            x: {
+                initial: { opacity: 0, x: '100vw' },
+                animate: { opacity: 1, x: 0 },
+                exit: { opacity: 0, x: '100vw' },
+            },
+        };
 
         useImperativeHandle(ref, () => ({
             dom: domRef.current,
@@ -33,31 +55,42 @@ const Modal = forwardRef(
             <AnimatePresence>
                 {visible && (
                     <div
-                        className="fixed top-0 left-0 right-0 bottom-0 z-9999 flex-center-center flex-col bg-[rgba(0,0,0,0.5)]"
+                        className="fixed inset-0 z-9999 flex-center-center flex-col bg-[rgba(0,0,0,0.5)]"
                         ref={domRef}
-                        onClick={onCancel}
+                        onClick={() => clickExternal && onCancel()}
                     >
                         <motion.div
-                            initial={{ opacity: 0, scale: 0.8 }}
-                            animate={{ opacity: 1, scale: 1 }}
-                            exit={{ opacity: 0, scale: 0.8 }}
+                            initial={motionObj[motionType].initial}
+                            animate={motionObj[motionType].animate}
+                            exit={motionObj[motionType].exit}
                             transition={{ duration: 0.2 }}
-                            className={`w-267px m-auto text-center bg-[#fff] rounded-8px ${className}`}
+                            className={`${width} m-auto ${className}`}
                             onClick={(e) => e.stopPropagation()}
                         >
-                            {title && <div>{title}</div>}
-                            {children}
-                            {!noFooter && (
-                                <div>
-                                    <button
-                                        className="mr-8"
-                                        onClick={onConfirm}
-                                    >
-                                        confirm
-                                    </button>
-                                    <button onClick={onCancel}>cancel</button>
-                                </div>
+                            {title && (
+                                <>
+                                    <div className="pt-5px leading-40px text-lgSize">
+                                        {title}
+                                    </div>
+                                    <div className="w-170px h-1px m-auto bg-gradient-to-r from-[#E2BD79] via-[#E5C07D] to-[#E2BD79] to-opacity-0 from-opacity-0" />
+                                </>
                             )}
+                            {children}
+                            <div className="flex-center-center leading-36px">
+                                {(confirmBtn || confirmText) && (
+                                    <Button
+                                        onClick={onConfirm}
+                                        className="min-w-123px w-auto h-36px mt-13px mb-18px px-16px rounded-8px bg-gradient-to-br from-[#EACB90] via-[#DFB975] to-[#DFB975] cursor-pointer"
+                                    >
+                                        {confirmText || t('modal.confirm')}
+                                    </Button>
+                                )}
+                                {(cancelBtn || cancelText) && (
+                                    <Button onClick={onCancel}>
+                                        {cancelText || t('modal.cancel')}
+                                    </Button>
+                                )}
+                            </div>
                         </motion.div>
                     </div>
                 )}

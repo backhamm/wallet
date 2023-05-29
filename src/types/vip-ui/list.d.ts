@@ -1,6 +1,6 @@
 import { CSSProperties, ReactNode } from 'React';
 
-export type ListStatus = 'loading' | 'nomore' | 'error';
+export type ListStatus = 'loading' | 'nomore' | 'error' | 'default';
 
 export interface ListProps {
     /**
@@ -70,6 +70,10 @@ export interface ListProps {
      * 滚动到(底部 - threshold)距离时触发
      */
     onEndReached?: () => void;
+    /**
+     * 是否显示空状态
+     */
+    showEmpty?: boolean;
 }
 
 export interface ListRef {

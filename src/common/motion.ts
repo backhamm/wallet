@@ -14,10 +14,7 @@ export const bounceList = {
 
     item: {
         hidden: { y: 20, opacity: 0 },
-        visible: {
-            y: 0,
-            opacity: 1,
-        },
+        visible: { y: 0, opacity: 1 },
     },
 };
 
@@ -25,10 +22,7 @@ export const bounceList = {
 export const pullUpList = {
     container: {
         visible: {
-            hidden: { opacity: 0, scale: 0 },
             transition: {
-                opacity: 1,
-                scale: 1,
                 delayChildren: 0.2,
                 staggerChildren: 0.1,
             },
@@ -36,9 +30,22 @@ export const pullUpList = {
     },
     item: {
         hidden: { y: 30, opacity: 0 },
+        visible: { y: 0, opacity: 1 },
+    },
+};
+
+// 左滑列表动画参数，参考服务热线列表
+export const toLeftList = {
+    container: {
         visible: {
-            y: 0,
-            opacity: 1,
+            transition: {
+                delayChildren: 0.1,
+                staggerChildren: 0.1,
+            },
         },
+    },
+    item: {
+        hidden: { x: 160, opacity: 0 },
+        visible: { x: 0, opacity: 1 },
     },
 };

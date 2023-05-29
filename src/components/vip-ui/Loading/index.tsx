@@ -11,7 +11,9 @@ const Loading = forwardRef((props: LoadingProps, ref: Ref<LoadingRef>) => {
         duration = 1500,
         style,
         className,
+        size = 16,
         radius = 12,
+        text,
     } = props;
 
     const circlePos = 0.5 * stroke + radius;
@@ -52,20 +54,27 @@ const Loading = forwardRef((props: LoadingProps, ref: Ref<LoadingRef>) => {
     const getLoadingStyle = (): React.CSSProperties => {
         return {
             display: 'inline-block',
-            width: circleSize,
-            height: circleSize,
+            width: size + 'px',
+            height: size + 'px',
             animationDuration: `${duration}ms`,
             ...(style || {}),
         };
     };
 
     return (
-        <div
-            className={classNames(className, 'arc')}
-            style={getLoadingStyle()}
-            ref={domRef}
-        >
-            {renderArc()}
+        <div className="flex-center-center flex-col">
+            <div
+                className={classNames(className, 'arc')}
+                style={getLoadingStyle()}
+                ref={domRef}
+            >
+                {renderArc()}
+            </div>
+            {text && (
+                <div className="mt-8px text-baseSize text-primaryColor">
+                    {text}
+                </div>
+            )}
         </div>
     );
 });

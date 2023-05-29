@@ -1,9 +1,9 @@
 export default {
     nav: {
-        concierge: { title: '礼宾部', num: '+63 9999 36 7777' },
-        cashier: { title: '账房部', num: '+63 288667555' },
-        market: { title: '市场部', num: '+63 9999 36 7777' },
-        scene: { title: '场面部', num: '+63 9999 32 8888' },
+        concierge: { title: '礼宾部', phone: '+63 9999 36 7777' },
+        cashier: { title: '账房部', phone: '+63 288667555' },
+        market: { title: '市场部', phone: '+63 9999 36 7777' },
+        scene: { title: '场面部', phone: '+63 9999 32 8888' },
     },
     call: '一键拨号',
     copy: '长按复制',

@@ -14,4 +14,14 @@ export default {
         balance: '户口余额显示',
     },
     logout: '退出登陆',
+    password: {
+        edit: '修改',
+        password: '请输入原密码',
+        newPwd: '请输入新密码',
+        confirmPwd: '请确认新密码',
+        tips: '安全好服务 尽在OKBET',
+        service: '忘记密码 请联系账房热线 重置密码',
+    },
+    toDetail: '查看详情',
+    newVersion: '检测到最新版本{{val}}请更新',
 };

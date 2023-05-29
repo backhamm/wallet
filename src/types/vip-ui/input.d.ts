@@ -63,7 +63,22 @@ export interface BasicInputProps<T = HTMLInputElement> {
     /**
      * input前缀的图标
      */
-    prefixIocn?: 'user' | 'lock' | 'code';
+    prefixIcon?: 'user' | 'lock' | 'code';
+
+    /**
+     * input前缀的dom
+     */
+    prefixDom?: React.ReactNode;
+
+    /**
+     * input后缀的dom
+     */
+    suffixDom?: React.ReactNode;
+
+    /**
+     * input后缀的dom
+     */
+    height?: number;
 
     /**
      * 清除按钮类型

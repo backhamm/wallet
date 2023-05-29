@@ -17,6 +17,7 @@ export default defineConfig({
                 assistColor1: '#232224',
                 assistColor2: '#0F0E0F',
                 assistColor3: '#1C1C1C',
+                assistColor4: '#E4C98E',
             },
             backgroundImage: {
                 gradientR: 'linear-gradient(90deg, #ECCF97 0%, #DFB975 100%)',
@@ -40,6 +41,7 @@ export default defineConfig({
                 baseColor: '#343434',
                 primaryColor: '#89724A',
                 assistColor1: '#E4C98E',
+                assistColor2: '#000',
             },
             placeholderColor: {
                 baseColor: '#808080',

@@ -46,7 +46,7 @@ const RecordList: (acIndex: number) => JSX.Element = (acIndex) => {
 
     const TradeObvious: FC<TradeObviousProps> = (props) => {
         const { data } = props;
-        const type = data === 'HKD' ? 'withdraw' : 'recharge';
+        const type = data === 'HKD' ? 'down' : 'up';
         return (
             <>
                 <div>

@@ -9,7 +9,7 @@ const GuidePage: FC = () => {
 
     return ReactDOM.createPortal(
         visible ? (
-            <div className="fixed top-0 left-0 right-0 bottom-0 z-9999 overflow-auto">
+            <div className="fixed inset-0 z-9999 overflow-auto">
                 <div
                     className="absolute top-20px right-20px text-baseColor px-20px leading-32px rounded-50px bg-[#f2f2f21a]"
                     onClick={() => setVisible(false)}

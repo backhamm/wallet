@@ -1,5 +1,5 @@
 export default {
-    goTest: 'go test page',
+    goTest: '去测试页面',
     nav: {
         transfer: '转账',
         codeOut: '预约出码',
@@ -24,8 +24,8 @@ export default {
         total: '总额',
         freeze: '冻结',
         balance: '余额',
-        withdraw: '提现',
-        recharge: '充值',
+        down: '提现',
+        up: '充值',
         ordinary: '普通',
         service: '营运',
         countUpAndDown: '上下数',
@@ -35,6 +35,17 @@ export default {
         record: '记录',
         games: '游戏网',
         dynamic: '动态',
-        funds: '资金',
+        funds: '信贷',
+    },
+    soon: '尽情期待',
+    loading: '加载中',
+    more: {
+        titleArr: ['推荐', '游戏', '汇率', '其他'],
+        itemArr: [
+            ['普通转账', '扫码转账', '帐变记录', '收款码', '预约服务'],
+            ['游戏网', '代理网'],
+            ['汇率', '货币兑换'],
+            ['信贷', '服务中心'],
+        ],
     },
 };

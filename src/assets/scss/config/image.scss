@@ -14,7 +14,10 @@ $tabIcons: home0, home1, record0, record1, games, dynamic0, dynamic1, funds0,
     }
 }
 
-$otherIcons: news, scan, withdraw, recharge, arrow, arrow2, call;
+/* stylelint-disable */
+$otherIcons: news, scan, down, up, arrow, arrow2, arrowBlack, call, kaigong,
+    reserveWithdrawal, horn, empty;
+/* stylelint-enable */
 @each $item in $otherIcons {
     .icon-#{$item} {
         background-image: url('../../images/icon/other/#{$item}.png');
@@ -39,11 +42,29 @@ $navIcons: transfer, codeOut, withdrawal, receiptCode, reserveRecord, scanCode,
 }
 
 /* stylelint-disable */
-$navIcons: BTC, CNY, ETH, HKD, KRW, PHP, TRB;
+$currencyIcons: BTC, CNY, ETH, HKD, KRW, PHP, TRB;
 /* stylelint-enable */
-@each $item in $navIcons {
+@each $item in $currencyIcons {
     .icon-#{$item} {
         background-image: url('../../images/icon/currency/#{$item}.png');
+    }
+}
+
+/* stylelint-disable */
+$formIcons: radio0, radio1, close, close0, close1, lock0, lock1, see, see0, see1,
+    unsee, unsee0, unsee1, user0, user1, code0, code1, selectArrow;
+/* stylelint-enable */
+@each $item in $formIcons {
+    .icon-#{$item} {
+        background-image: url('../../images/icon/form/#{$item}.png');
+    }
+}
+
+$moreIcons: more0-0, more0-1, more0-2, more0-3, more0-4, more1-0, more1-1,
+    more2-0, more2-1, more3-0, more3-1;
+@each $item in $moreIcons {
+    .icon-#{$item} {
+        background-image: url('../../images/icon/more/#{$item}.png');
     }
 }
 
@@ -56,7 +77,12 @@ $navIcons: BTC, CNY, ETH, HKD, KRW, PHP, TRB;
 }
 
 .user-banner {
-    background: url('../../images/userCenter/userBanner.png') no-repeat
+    background: url('../../images/userCenter/user-banner.png') no-repeat
+        center/100%;
+}
+
+.notify-bg {
+    background: url('../../images/userCenter/notify-bg.png') no-repeat
         center/100%;
 }
 
@@ -70,4 +96,17 @@ $navIcons: BTC, CNY, ETH, HKD, KRW, PHP, TRB;
 
 .guide-ko {
     background: url('../../images/login/guide-ko.png') no-repeat center/100%;
+}
+
+.login-top {
+    background: url('../../images/login/login-top.png') no-repeat center/100%;
+}
+
+.image-error {
+    background: url('../../images/common/image-error.png') no-repeat center/100%;
+}
+
+.authorizer-bg {
+    background: url('../../images/userCenter/authorizer.png') no-repeat
+        center/100%;
 }

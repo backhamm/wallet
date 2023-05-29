@@ -19,11 +19,20 @@ export interface LoadingProps {
      * 描边宽度
      */
     stroke?: number;
+    /**
+     * 宽高
+     */
+    size?: number;
 
     /**
      * 圆圈半径
      */
     radius?: number;
+
+    /**
+     * 描述文字
+     */
+    text?: string;
 }
 
 export interface LoadingRef {

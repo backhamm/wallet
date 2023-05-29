@@ -10,15 +10,17 @@ import React, {
 } from 'react';
 import { throttle as lodashThrottle } from 'lodash';
 import classNames from 'classnames';
+import { useTranslation } from 'react-i18next';
 import { ListStatus, ListProps, ListRef } from '@/types/vip-ui/list';
 import { useMemoizedFn, useLatest } from '@/hooks';
+import { Empty, Loading } from '@/components/vip-ui';
 
 const List = forwardRef(
     (props: PropsWithChildren<ListProps>, ref: Ref<ListRef>) => {
         const {
             className = '',
             style,
-            threshold = 100,
+            threshold = 40,
             throttle = 200,
             getData,
             isLoading,
@@ -30,12 +32,14 @@ const List = forwardRef(
             getScrollContainer,
             onClick,
             onEndReached,
+            showEmpty = true,
             children,
         } = props;
         const domRef = useRef<HTMLDivElement | null>(null);
-        const [nowStatus, setNowStatus] = useState<ListStatus>('loading');
+        const [nowStatus, setNowStatus] = useState<ListStatus>('default');
         const getDataRun = useMemoizedFn(getData);
         const lastScrollEndRef = useLatest(false);
+        const { t } = useTranslation();
 
         useImperativeHandle(ref, () => ({
             dom: domRef.current,
@@ -119,12 +123,12 @@ const List = forwardRef(
         useEffect(() => {
             if (!hasMore) {
                 setNowStatus('nomore');
-            }
-            if (isLoading) {
+            } else if (isLoading) {
                 setNowStatus('loading');
-            }
-            if (isError) {
+            } else if (isError) {
                 setNowStatus('error');
+            } else {
+                setNowStatus('default');
             }
         }, [hasMore, isLoading, isError]);
 
@@ -142,41 +146,51 @@ const List = forwardRef(
             switch (nowStatus) {
                 case 'loading':
                     return loadingArea === void 0 ? (
-                        <div>正在努力加载中...</div>
+                        <div className="flex-center-center h-40px">
+                            <Loading size={24} />
+                        </div>
                     ) : (
                         loadingArea
                     );
                 case 'nomore':
                     return noMoreArea === void 0 ? (
-                        <div>没有更多数据了</div>
+                        <div className="h-40px leading-40px text-center text-assistColor1">
+                            {t('common.noMoreData')}
+                        </div>
                     ) : (
                         noMoreArea
                     );
                 case 'error':
                     return errorArea === void 0 ? (
-                        <div onClick={handleErrorClick}>
-                            加载失败,点击重新加载
+                        <div
+                            className="h-40px leading-40px text-center text-assistColor1"
+                            onClick={handleErrorClick}
+                        >
+                            {t('common.failedToLoad')}
                         </div>
                     ) : (
                         errorArea
                     );
                 default:
-                    return null;
+                    return <div className="flex-center-center h-40px" />;
             }
         };
 
         return (
             <div
-                className={classNames(
-                    className,
-                    'w-full h-auto pt-[10px] pb-[40px]',
-                )}
+                className={classNames(className, 'w-full h-auto')}
                 ref={domRef}
                 onClick={handleClick}
                 style={style}
             >
-                {children}
-                {renderArea()}
+                {showEmpty && !children[0] && !isLoading ? (
+                    <Empty />
+                ) : (
+                    <>
+                        {children}
+                        {renderArea()}
+                    </>
+                )}
             </div>
         );
     },

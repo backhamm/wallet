@@ -21,6 +21,7 @@ const Button = forwardRef(
             className = '',
             children = null,
             loadingIcon,
+            width = 'w-full',
             onClick,
             onClickDisabled,
             coverIconWhenLoading = true,
@@ -46,7 +47,8 @@ const Button = forwardRef(
                 className={classNames(
                     className,
                     { 'bg-gradientR opacity-50': disabled },
-                    'flex-center-center w-full text-lgSize rounded-[8px] bg-gradientR h-[44px]',
+                    'flex-center-center text-lgSize rounded-8px text-assistColor5 bg-gradientR h-44px',
+                    width,
                 )}
                 onClick={
                     disabled || (loading && disableWhenLoading)
@@ -56,14 +58,9 @@ const Button = forwardRef(
                 disabled={disabled}
             >
                 {icon || loading ? (
-                    <div>
+                    <div className="flex-center-center mr-5px">
                         {renderIcon()}
-                        {loading &&
-                            (loadingIcon === void 0 ? (
-                                <Loading />
-                            ) : (
-                                loadingIcon
-                            ))}
+                        {loading && (loadingIcon ? loadingIcon : <Loading />)}
                     </div>
                 ) : null}
                 {(!loading || (loading && showTextWhenLoading)) && children ? (

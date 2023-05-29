@@ -14,8 +14,7 @@ import LazyLoad from 'react-lazy-load';
 import { ImageProps, ImageRef, ImageStatus } from '@/types/vip-ui/image';
 import { nextTick } from '@/utils/tools';
 import { Loading } from '@/components/vip-ui';
-import imageError from '@/assets/images/icon/image-error.svg';
-import { pxToVw } from '@/config/pxtovw';
+import imageError from '@/assets/images/common/image-error.png';
 
 export const BaseImage = forwardRef((props: ImageProps, ref: Ref<ImageRef>) => {
     const [imageStatus, setImageStatus] = useState<ImageStatus>('init');
@@ -27,6 +26,7 @@ export const BaseImage = forwardRef((props: ImageProps, ref: Ref<ImageRef>) => {
     const {
         style,
         className,
+        imgClass = 'w-full h-full',
         status,
         src,
         alt = '',
@@ -54,9 +54,9 @@ export const BaseImage = forwardRef((props: ImageProps, ref: Ref<ImageRef>) => {
             alt,
             src,
             style: imageStyle,
-            className: className,
+            className: imgClass,
         };
-    }, [alt, className, fit, src]);
+    }, [alt, fit, imgClass, src]);
 
     // 如果图片加载失败，重新加载图片
     function retry() {
@@ -145,10 +145,9 @@ export const BaseImage = forwardRef((props: ImageProps, ref: Ref<ImageRef>) => {
             ref={wrapRef}
         >
             <div
-                className={classNames(
-                    'w-full h-full absolute top-0 left-0 bottom-0 right-0 z-1',
-                    { opacity: validStatus === 'loaded' ? 1 : 0 },
-                )}
+                className={classNames('w-full h-full absolute inset-0 z-1', {
+                    opacity: validStatus === 'loaded' ? 1 : 0,
+                })}
                 onClick={onClick}
                 ref={imageRef}
             >
@@ -160,24 +159,21 @@ export const BaseImage = forwardRef((props: ImageProps, ref: Ref<ImageRef>) => {
                         onLoad && onLoad(e.nativeEvent, imageDomRef.current!)
                     }
                     onError={handleStaticImageError}
+                    alt=""
                 />
             </div>
             {showLoading && validStatus === 'loading' ? (
-                <div className="w-full h-full bg-[#f7f8fa] absolute top-0 left-0 bottom-0 right-0 overflow-hidden flex-center-center flex-col z-10">
+                <div className="w-full h-full absolute inset-0 overflow-hidden flex-center-center flex-col z-10">
                     {loadingArea || (
                         <div className="bg-[rgba(0,0,0,0.5)] w-full h-full flex-center-center flex-col">
-                            <Loading
-                                className="loading-icon"
-                                radius={11}
-                                stroke={3}
-                            />
+                            <Loading className="loading-icon" size={24} />
                         </div>
                     )}
                 </div>
             ) : null}
             {showError && validStatus === 'error' ? (
                 <div
-                    className="w-full h-full bg-[#f7f8fa] absolute overflow-hidden top-0 left-0 bottom-0 right-0  flex-center-center flex-col z-10"
+                    className="w-full h-full absolute overflow-hidden inset-0 flex-center-center flex-col z-10"
                     onClick={(e) => {
                         e.stopPropagation();
                         retry();
@@ -185,10 +181,11 @@ export const BaseImage = forwardRef((props: ImageProps, ref: Ref<ImageRef>) => {
                 >
                     {errorArea || (
                         <div className="flex-center-center flex-col">
-                            <img src={imageError} alt="" className="w-[40px]" />
-                            <span className="text-[14px] text-[#ccc] mt-[10px]">
-                                图片加载失败
-                            </span>
+                            <img
+                                className="w-full h-full"
+                                src={imageError}
+                                alt=""
+                            />
                         </div>
                     )}
                 </div>
@@ -198,17 +195,14 @@ export const BaseImage = forwardRef((props: ImageProps, ref: Ref<ImageRef>) => {
 });
 
 const ImageComponent = forwardRef((props: ImageProps, ref: Ref<ImageRef>) => {
-    const { width, height } = props;
-    const [visbile, setVisbile] = useState(false);
+    const [visible, setVisible] = useState(false);
     return (
         <LazyLoad
-            width={pxToVw(width)}
-            height={pxToVw(height)}
             onContentVisible={() => {
-                setVisbile(true);
+                setVisible(true);
             }}
         >
-            {visbile ? (
+            {visible ? (
                 <BaseImage {...props} ref={ref} />
             ) : (
                 <Fragment></Fragment>

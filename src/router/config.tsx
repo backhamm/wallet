@@ -4,11 +4,11 @@ import { useRecoilValue } from 'recoil';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
 import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
-import { Loading } from '@/components/vip-ui';
-import { localeState } from '@/store/common/atoms';
+import { localeState, navTitleState } from '@/store/common/atoms';
 import { API_URL } from '@/common/constants';
 import NavBar from '@/components/NavBar';
 import TabBar from '@/components/TabBar';
+import { Loading } from '@/components/vip-ui';
 import PrivateRoute from './privateRoute';
 
 export type WrapperRouteProps = RouteProps & {
@@ -33,12 +33,14 @@ export const WrapperRouteComponent: FC<WrapperRouteProps> = ({
     outerClass = 'page-bg',
     ...props
 }) => {
-    const store = useRecoilValue(localeState);
+    const locale = useRecoilValue(localeState);
+    const navTitle = useRecoilValue(navTitleState);
     const { t } = useTranslation();
 
     const WitchRoute = auth ? PrivateRoute : PublicRoute;
-    const navTitle = t(
+    const NavTitle = t(
         `navTitle.${
+            navTitle ||
             title ||
             location.pathname.slice(location.pathname.lastIndexOf('/') + 1)
         }`,
@@ -47,23 +49,30 @@ export const WrapperRouteComponent: FC<WrapperRouteProps> = ({
     return (
         <HelmetProvider>
             <Helmet>
-                <html lang={store.locale} />
-                <meta property="og:title" content={navTitle} />
-                <title>{navTitle}</title>
+                <html lang={locale.locale} />
+                <meta property="og:title" content={NavTitle} />
+                <title>{NavTitle}</title>
                 <link rel="canonical" href={API_URL} />
             </Helmet>
             <main
                 className={`flex flex-col h-full text-baseColor bg-baseColor text-baseSize ${outerClass}`}
             >
-                {navBar && <NavBar title={navTitle} />}
+                {navBar && <NavBar title={NavTitle} />}
                 <div className="flex-1 overflow-auto">
-                    <Suspense fallback={<Loading />}>
+                    <Suspense
+                        fallback={
+                            <div className="fixed inset-0 flex-center-center">
+                                <Loading size={26} text={t('home.loading')} />
+                            </div>
+                        }
+                    >
                         {isMotion ? (
                             <motion.div
-                                key={navTitle}
+                                key={NavTitle}
                                 initial={{ opacity: 0, y: '20vw' }}
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ duration: 0.2 }}
+                                className="h-full"
                             >
                                 <WitchRoute {...props} />
                             </motion.div>

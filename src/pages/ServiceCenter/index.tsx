@@ -1,5 +1,7 @@
 import React, { FC, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { motion } from 'framer-motion';
+import { bounceList, toLeftList } from '@/common/motion';
 
 const ServiceCenter: FC = () => {
     const [acIndex, setAcIndex] = useState(0);
@@ -11,11 +13,17 @@ const ServiceCenter: FC = () => {
 
     return (
         <div className="pt-20px px-10px pb-34px text-primaryColor">
-            <div className="flex-between-center h-100px px-20px rounded-10px bg-assistColor3 bg-opacity-80">
+            <motion.ul
+                variants={bounceList.container}
+                initial="hidden"
+                animate="visible"
+                className="flex-between-center h-100px px-20px rounded-10px bg-assistColor3 bg-opacity-80"
+            >
                 {navList.map((el, i) => {
                     return (
-                        <div
+                        <motion.li
                             key={el}
+                            variants={bounceList.item}
                             className="w-60px text-center"
                             onClick={() => setAcIndex(i)}
                         >
@@ -32,23 +40,30 @@ const ServiceCenter: FC = () => {
                             >
                                 {t(`service.nav.${el}.title`)}
                             </div>
-                        </div>
+                        </motion.li>
                     );
                 })}
-            </div>
-            <div className="px-10px">
-                <div className="flex-between-center mt-20px mb-15px leading-20px">
-                    <span className="text-lgSize">{t('service.call')}</span>
-                    <div className="flex items-center text-baseColor">
-                        <i className="icon-call w-14px h-14px mr-4px" />
-                        {t(`service.nav.${navList[acIndex]}.phone`)}
-                    </div>
+            </motion.ul>
+            <div className="flex-between-center mt-20px px-10px mb-15px leading-20px">
+                <span className="text-lgSize">{t('service.call')}</span>
+                <div className="flex items-center text-baseColor">
+                    <i className="icon-call w-14px h-14px mr-4px" />
+                    {t(`service.nav.${navList[acIndex]}.phone`)}
                 </div>
+            </div>
+            <motion.ul
+                key={acIndex}
+                variants={toLeftList.container}
+                initial="hidden"
+                animate="visible"
+                className="overflow-x-hidden px-10px"
+            >
                 {serviceList[acIndex].map(
                     (el: string | { [key: string]: string }, i: number) => {
                         return (
-                            <div
+                            <motion.li
                                 key={i}
+                                variants={toLeftList.item}
                                 className="h-100px mb-15px p-1px"
                                 style={{
                                     background: `url(${require(`@/assets/images/service/${navList[acIndex]}${i}.png`)}) no-repeat center/100% 100%`,
@@ -82,11 +97,11 @@ const ServiceCenter: FC = () => {
                                         {el.url}
                                     </div>
                                 )}
-                            </div>
+                            </motion.li>
                         );
                     },
                 )}
-            </div>
+            </motion.ul>
             <div className="text-center text-assistColor1">
                 {t('service.tips')}
             </div>

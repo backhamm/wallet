@@ -5,25 +5,6 @@ import { BasicInputProps } from '@/types/vip-ui/input';
 
 export type InputEleType = HTMLInputElement | HTMLTextAreaElement;
 
-const ActiveIconMap = {
-    user: require('@/assets/images/icon/form/user.png'),
-    userActive: require('@/assets/images/icon/form/user-active.png'),
-    lock: require('@/assets/images/icon/form/lock.png'),
-    lockActive: require('@/assets/images/icon/form/lock-active.png'),
-    unsee: require('@/assets/images/icon/form/unsee.png'),
-    unseeActive: require('@/assets/images/icon/form/unsee-active.png'),
-    see: require('@/assets/images/icon/form/see.png'),
-    seeActive: require('@/assets/images/icon/form/see-active.png'),
-    close: require('@/assets/images/icon/form/close.png'),
-    closeActive: require('@/assets/images/icon/form/close-active.png'),
-};
-
-const NormalIconMap = {
-    unsee: require('@/assets/images/icon/form/unsee-normal.png'),
-    see: require('@/assets/images/icon/form/see-normal.png'),
-    close: require('@/assets/images/icon/form/close-normal.png'),
-};
-
 export function useInputLogic(
     props: BasicInputProps<InputEleType>,
     inputRef: React.MutableRefObject<InputEleType | null>,
@@ -44,14 +25,17 @@ export function useInputLogic(
         onFocus,
         onBlur,
         onClick,
-        prefixIocn,
+        prefixIcon,
+        prefixDom,
+        suffixDom,
+        height = 44,
         isClear = true,
         onClear,
         autoFocus,
     } = props;
     const [inputValue, setInputValue] = useState(value || defaultValue || '');
     const [isFocusing, setIsFocusing] = useState(false);
-    const [inputType, serInputType] = useState(type);
+    const [inputType, setInputType] = useState(type);
     const shouldPreventEvent = useRef(false);
     const wrapRef = useRef<HTMLDivElement | null>(null);
 
@@ -147,8 +131,8 @@ export function useInputLogic(
     }
 
     //处理光标
-    const inpitFocusing = () => {
-        serInputType(inputType === 'password' ? 'text' : 'password');
+    const inputFocusing = () => {
+        setInputType(inputType === 'password' ? 'text' : 'password');
         if (isFocusing) {
             if (inputRef.current) {
                 inputRef.current.focus();
@@ -162,71 +146,51 @@ export function useInputLogic(
 
     // 处理前缀icon
     const PrefixNode = () => {
+        if (!prefixIcon) {
+            return <></>;
+        }
         switch (styleType) {
             case 'normal':
-                return prefixIocn ? (
-                    <img
-                        src={NormalIconMap[prefixIocn]}
-                        className="w-[22px] h-[22px]"
-                    />
-                ) : null;
+                return <i className={`w-22px h-22px icon-${prefixIcon}`} />;
             case 'active':
-                const url =
-                    isFocusing || inputValue
-                        ? ActiveIconMap[prefixIocn + 'Active']
-                        : ActiveIconMap[prefixIocn];
-
-                return prefixIocn ? (
-                    <img src={url} className="w-[22px] h-[22px]" />
-                ) : null;
+                return (
+                    <i
+                        className={`w-22px h-22px icon-${prefixIcon}${
+                            isFocusing || inputValue ? 1 : 0
+                        }`}
+                    />
+                );
         }
     };
 
     // 处理后缀password icon
     const SuffixNode = () => {
-        const acticeSeeIcon = () => {
-            return isFocusing || inputValue
-                ? ActiveIconMap.unseeActive
-                : ActiveIconMap.unsee;
-        };
-        const activeUnseeIcon = () => {
-            return isFocusing || inputValue
-                ? ActiveIconMap.seeActive
-                : ActiveIconMap.see;
-        };
+        if (type !== 'password') {
+            return <></>;
+        }
         switch (styleType) {
             case 'normal':
                 return (
-                    type === 'password' && (
-                        <img
-                            src={
-                                inputType === 'password'
-                                    ? NormalIconMap.unsee
-                                    : NormalIconMap.see
-                            }
-                            className="w-[16px] h-[10px]  mr-[10px]"
-                            onClick={() => {
-                                inpitFocusing();
-                            }}
-                        />
-                    )
+                    <i
+                        className={`w-16px h-10px mr-10px icon-${
+                            inputType === 'password' ? 'unsee' : 'see'
+                        }`}
+                        onClick={() => {
+                            inputFocusing();
+                        }}
+                    />
                 );
 
             case 'active':
                 return (
-                    type === 'password' && (
-                        <img
-                            src={
-                                inputType === 'password'
-                                    ? acticeSeeIcon()
-                                    : activeUnseeIcon()
-                            }
-                            className="w-[16px] h-[10px] mr-[10px]"
-                            onClick={() => {
-                                inpitFocusing();
-                            }}
-                        />
-                    )
+                    <i
+                        className={`w-16px h-10px mr-10px icon-${
+                            inputType === 'password' ? 'un' : ''
+                        }see${isFocusing || inputValue ? 1 : 0}`}
+                        onClick={() => {
+                            inputFocusing();
+                        }}
+                    />
                 );
         }
     };
@@ -236,23 +200,18 @@ export function useInputLogic(
         switch (styleType) {
             case 'normal':
                 return (
-                    <img
+                    <i
                         onClick={handleClear}
-                        src={NormalIconMap.close}
-                        className="w-[14px] h-[14px]"
-                    ></img>
+                        className="w-14px h-14px icon-close"
+                    />
                 );
             case 'active':
-                const url =
-                    isFocusing || inputValue
-                        ? ActiveIconMap.closeActive
-                        : ActiveIconMap.close;
-
                 return (
-                    <img
+                    <i
                         onClick={handleClear}
-                        src={url}
-                        className="w-[14px] h-[14px]"
+                        className={`w-14px h-14px icon-close${
+                            isFocusing || inputValue ? 1 : 0
+                        }`}
                     />
                 );
         }
@@ -287,13 +246,15 @@ export function useInputLogic(
                 <div
                     className={classNames(
                         className,
-                        'w-full h-[44px]  flex-center-center p-[10px]',
+                        `relative w-full h-${height}px flex-center-center p-10px`,
                         InputStyle(),
                     )}
                 >
-                    {<PrefixNode></PrefixNode>}
+                    <PrefixNode />
+                    {prefixDom}
                     {children}
-                    {<SuffixNode></SuffixNode>}
+                    {suffixDom}
+                    <SuffixNode />
                     {isClear && inputValue && <ClearNode></ClearNode>}
                 </div>
             </div>

@@ -1,5 +1,5 @@
 export default {
     abnormal: {
-        403: 'No permission!',
+        403: '没有权限！',
     },
 };

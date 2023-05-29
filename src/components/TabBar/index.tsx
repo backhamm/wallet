@@ -1,17 +1,18 @@
 import React, { FC, useEffect, useState, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 type FooterProps = {};
 
-const Footer: FC<FooterProps> = (props) => {
+const Footer: FC<FooterProps> = () => {
     const [acIndex, setAcIndex] = useState(0);
     const navigate = useNavigate();
+    const location = useLocation();
     const { t } = useTranslation();
     const tabArr: Array<string> = Object.keys(
         t('home.footer', { returnObjects: true }),
     );
 
-    const routerArr = useMemo(() => ['/home', '/testDemo'], []);
+    const routerArr = useMemo(() => ['/home', '/testDemo', '', '/dynamic'], []);
 
     const handleClick = (i: number) => {
         navigate(routerArr[i] || '/home');

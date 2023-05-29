@@ -13,9 +13,10 @@ import { useNavigate } from 'react-router-dom';
 import { operateListType } from '@/pages/UserCenter/index';
 import { Modal } from '@/components/vip-ui';
 import { changeLanguage, getLanguage } from '@/config/locale';
-import { LangEnum, LocaleEnum } from '@/enums/appEnum';
+import { LangEnum } from '@/enums/appEnum';
 import { userCurrencyState } from '@/store/user/atoms';
 import { pullUpList } from '@/common/motion';
+import { langList } from '@/locales';
 
 interface UserItemProps {
     itemArr: operateListType[];
@@ -38,11 +39,7 @@ const UserModal = forwardRef((props, ref: Ref<UserModalRef>) => {
     const setUserCurrency = useSetRecoilState(userCurrencyState);
 
     const modalList: ModalListType = {
-        language: [
-            { label: LangEnum.zh, value: LocaleEnum.ZH },
-            { label: LangEnum.en, value: LocaleEnum.EN },
-            { label: LangEnum.ko, value: LocaleEnum.KO },
-        ],
+        language: langList,
         balance: ['PHP', 'HKD', 'CRN', 'KRW', 'USDT'],
     };
 
@@ -59,31 +56,24 @@ const UserModal = forwardRef((props, ref: Ref<UserModalRef>) => {
         <Modal
             visible={visible}
             onCancel={() => setVisible(false)}
-            noFooter
-            className="min-h-168px pt-5px leading-40px text-lgSize bg-gradient-to-r from-[#fdefd4] to-[#ffe4b0]"
+            title={t(`userCenter.modalTitle.${modalType}`)}
+            className="leading-40px text-lgSize text-center rounded-8px bg-gradient-to-r from-[#fdefd4] to-[#ffe4b0]"
         >
-            <div>{t(`userCenter.modalTitle.${modalType}`)}</div>
-            <div className="w-170px h-1px m-auto bg-gradient-to-r from-[#E2BD79] via-[#E5C07D] to-[#E2BD79] to-opacity-0 from-opacity-0" />
             {modalList[modalType]?.map((el) => {
-                return modalType === 'language' ? (
+                return (
                     <div
-                        key={el.value}
+                        key={typeof el === 'string' ? el : el.value}
                         onClick={() => {
                             setVisible(false);
-                            changeLanguage(el.value);
+                            switch (modalType) {
+                                case 'language':
+                                    return changeLanguage(el.value);
+                                case 'balance':
+                                    return setUserCurrency(el);
+                            }
                         }}
                     >
-                        {el.label}
-                    </div>
-                ) : (
-                    <div
-                        key={el}
-                        onClick={() => {
-                            setVisible(false);
-                            setUserCurrency(el);
-                        }}
-                    >
-                        {el}
+                        {typeof el === 'string' ? el : el.label}
                     </div>
                 );
             })}
@@ -98,7 +88,7 @@ const UserItem: FC<UserItemProps> = ({ itemArr, className }) => {
 
     const itemContentClass = (i: number) => {
         return `flex-between-center h-50px mx-10px px-10px ${
-            !i ? '' : 'border-t-1px border-solid border-[#282829]'
+            !i ? '' : 'border-t-1px border-solid border-baseColor'
         }`;
     };
 

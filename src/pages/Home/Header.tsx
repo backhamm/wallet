@@ -18,7 +18,10 @@ const Header: FC = () => {
                     className="w-24px h-24px mr-15px icon-scan"
                     onClick={() => navigate('/scanCode')}
                 />
-                <i className="w-24px h-24px icon-news" />
+                <i
+                    className="w-24px h-24px icon-news"
+                    onClick={() => navigate('/notify')}
+                />
             </div>
         </div>
     );

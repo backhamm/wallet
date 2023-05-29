@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import Record from '@/pages/Home/Record';
 import NavList from '@/pages/Home/NavList';
 import Header from '@/pages/Home/Header';
+import HomeModal from '@/pages/Home/HomeModal';
 
 const Home: FC = () => {
     const { t } = useTranslation();
@@ -12,6 +13,7 @@ const Home: FC = () => {
 
     return (
         <div className="h-full pb-32px home-top-bg overflow-x-hidden">
+            <HomeModal />
             <Header />
             <div className="px-10px pb-15px">
                 <NavList

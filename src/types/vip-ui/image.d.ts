@@ -10,13 +10,9 @@ export interface ImageProps {
      */
     className?: string;
     /**
-     * 容器宽度
+     * img类名
      */
-    width: number;
-    /**
-     * 容器高度
-     */
-    height: number;
+    imgClass?: string;
     /**
      * 指定图片状态
      */

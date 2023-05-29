@@ -6,24 +6,47 @@ export interface ModalProps {
     /**
      * 取消回调
      */
-    onCancel: () => void;
+    onCancel?: () => void;
     /**
      * 标题
      */
     title?: string;
     /**
-     * 不需要footer
-     * @default false
+     * 需要确认按钮
      */
-    noFooter?: boolean;
+    confirmBtn?: boolean;
+    /**
+     * 需要取消按钮
+     */
+    cancelBtn?: boolean;
+    /**
+     * 确认按钮文字内容
+     */
+    confirmText?: string;
+    /**
+     * 取消按钮文字内容
+     */
+    cancelText?: string;
     /**
      * 确认回调
      */
     onConfirm?: () => void;
     /**
+     * 点击内容区外部关闭弹窗
+     */
+    clickExternal?: boolean;
+    /**
+     * 宽度
+     */
+    width?: string;
+    /**
      * 类名
      */
     className?: string;
+    /**
+     * 动画效果
+     */
+    motionType?: string;
 }
 
 export interface ModalRef {

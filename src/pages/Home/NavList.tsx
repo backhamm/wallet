@@ -17,7 +17,7 @@ const NavList: FC<NavListProps> = (props) => {
 
     const handleClick = (type: string) => {
         switch (type) {
-            case 'serviceCenter':
+            default:
                 return navigate(`/${type}`);
         }
     };
